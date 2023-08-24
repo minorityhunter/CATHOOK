@@ -10,6 +10,8 @@ local TextLabel_2 = Instance.new("TextLabel")
 local TextButton_2 = Instance.new("TextButton")
 local TextLabel_3 = Instance.new("TextLabel")
 local ImageLabel = Instance.new("ImageLabel")
+local TextLabel_4 = Instance.new("TextLabel")
+local TextButton_3 = Instance.new("TextButton")
 
 --Properties:
 
@@ -90,60 +92,304 @@ ImageLabel.Position = UDim2.new(0.242932856, 0, 0.0827160478, 0)
 ImageLabel.Size = UDim2.new(0, 677, 0, 278)
 ImageLabel.Image = "http://www.roblox.com/asset/?id=13979677676"
 
+TextLabel_4.Parent = ScreenGui
+TextLabel_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_4.BorderSizePixel = 0
+TextLabel_4.Position = UDim2.new(0.258977145, 0, 0.290123463, 0)
+TextLabel_4.Size = UDim2.new(0, 200, 0, 50)
+TextLabel_4.Font = Enum.Font.SourceSans
+TextLabel_4.Text = "metal crate esp"
+TextLabel_4.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_4.TextScaled = true
+TextLabel_4.TextSize = 14.000
+TextLabel_4.TextWrapped = true
+
+TextButton_3.Parent = TextLabel_4
+TextButton_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_3.BorderSizePixel = 0
+TextButton_3.Position = UDim2.new(1.09500003, 0, 0, 0)
+TextButton_3.Size = UDim2.new(0, 34, 0, 50)
+TextButton_3.Font = Enum.Font.SourceSans
+TextButton_3.Text = "enable"
+TextButton_3.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_3.TextScaled = true
+TextButton_3.TextSize = 14.000
+TextButton_3.TextWrapped = true
+
 -- Scripts:
 
-local function QELYO_fake_script() -- TextButton.LocalScript 
+local function WIOKFN_fake_script() -- TextButton.LocalScript 
 	local script = Instance.new('LocalScript', TextButton)
 
-	_G.chams = false
-	local Players = game:GetService("Players")
-	
 	script.Parent.MouseButton1Click:Connect(function()
-		if _G.chams == false then
-			_G.chams = true
-			script.Parent.Text = "oN"
-			script.Parent.TextColor3 = Color3.fromRGB(0, 0, 0)
-			--- cham
-			function CreateSG(name,parent,face)
-				local SurfaceGui = Instance.new("SurfaceGui",parent)
-				SurfaceGui.Parent = parent
-				SurfaceGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-				SurfaceGui.Face = Enum.NormalId[face]
-				SurfaceGui.LightInfluence = 0
-				SurfaceGui.ResetOnSpawn = false
-				SurfaceGui.Name = name
-				SurfaceGui.AlwaysOnTop = true
-				local Frame = Instance.new("Frame",SurfaceGui)
-				Frame.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
-				Frame.Size = UDim2.new(1,0,1,0)
+		local Players = game:GetService("Players")
+		local RunService = game:GetService("RunService")
+		local LocalPlayer = Players.LocalPlayer
+	
+		local ESP = {}
+	
+		ESP.settings = {
+			enabled = true,
+			box = {enabled = true, color = Color3.new(1, 1, 1), thickness = 1, transparency = 1, filled = false},
+			text = {nameEnabled = true, distanceEnabled = true, color = Color3.new(1, 1, 1), size = 13, center = true, outline = true, outlineColor = Color3.new(0, 0, 0)},
+			itemtext = {enabled = true, color = Color3.new(1, 1, 1), size = 13, center = true, outline = true, outlineColor = Color3.new(0, 0, 0)},
+			healthbar = {enabled = true, thickness = 1, filled = true, transparency = 1, outline = {enabled = true, thickness = 2, filled = false, color = Color3.new(0, 0, 0)}},
+			healthtext = {enabled = true, color = Color3.new(0, 1, 0), size = 13, center = true, outline = true, outlineColor = Color3.new(0, 0, 0)}
+		}
+	
+		local function findTool(player)
+			for _, tool in ipairs(player:GetChildren()) do
+				if tool:IsA("Tool") then
+					return tostring(tool.Name)
+				end
 			end
-			
-			while wait(1) do
-				for i,v in pairs (game:GetService("Players"):GetPlayers()) do
-					if v ~= game:GetService("Players").LocalPlayer and v.Character ~= nil and v.Character:FindFirstChild("Head") and v.Character.Head:FindFirstChild("cham") == nil then
-						for i,v in pairs (v.Character:GetChildren()) do
-							if v:IsA("MeshPart") or v.Name == "Head" then
-								CreateSG("cham",v,"Back")
-								CreateSG("cham",v,"Front")
-								CreateSG("cham",v,"Left")
-								CreateSG("cham",v,"Right")
-								CreateSG("cham",v,"Right")
-								CreateSG("cham",v,"Top")
-								CreateSG("cham",v,"Bottom")
+			return "None"
+		end
+	
+		local function getBoundingPoints(part)
+			local points = {}
+	
+			local function traverse(child)
+				if child:IsA("BasePart") and child.Transparency < 1 then
+					local corners = {
+						child.CFrame:PointToWorldSpace(Vector3.new(-0.5, -0.5, -0.5)),
+						child.CFrame:PointToWorldSpace(Vector3.new(-0.5, -0.5, 0.5)),
+						child.CFrame:PointToWorldSpace(Vector3.new(-0.5, 0.5, -0.5)),
+						child.CFrame:PointToWorldSpace(Vector3.new(-0.5, 0.5, 0.5)),
+						child.CFrame:PointToWorldSpace(Vector3.new(0.5, -0.5, -0.5)),
+						child.CFrame:PointToWorldSpace(Vector3.new(0.5, -0.5, 0.5)),
+						child.CFrame:PointToWorldSpace(Vector3.new(0.5, 0.5, -0.5)),
+						child.CFrame:PointToWorldSpace(Vector3.new(0.5, 0.5, 0.5))
+					}
+	
+					for _, corner in ipairs(corners) do
+						local position, visible = workspace.CurrentCamera:WorldToViewportPoint(corner)
+						if visible then
+							table.insert(points, position)
+						end
+					end
+				end
+	
+				for _, descendant in ipairs(child:GetChildren()) do
+					traverse(descendant)
+				end
+			end
+	
+			traverse(part)
+	
+			return points
+		end
+	
+		local function createDrawingObject(shape, props)
+			local obj = Drawing.new(shape)
+			for prop, value in pairs(props) do
+				obj[prop] = value
+			end
+			return obj
+		end
+	
+		local function CreateESP(character)
+			local esp = {}
+	
+			local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+			if not humanoidRootPart then
+				return nil
+			end
+	
+			local box = createDrawingObject("Square", { Visible = false, Color = ESP.settings.box.color, Thickness = ESP.settings.box.thickness, Transparency = ESP.settings.box.transparency, Filled = ESP.settings.box.filled })
+			local text = createDrawingObject("Text", { Visible = false, Color = ESP.settings.text.color, Size = ESP.settings.text.size, Center = ESP.settings.text.center, Outline = ESP.settings.text.outline, OutlineColor = ESP.settings.text.outlineColor })
+			local itemText = createDrawingObject("Text", { Visible = false, Color = ESP.settings.itemtext.color, Size = ESP.settings.itemtext.size, Center = ESP.settings.itemtext.center, Outline = ESP.settings.itemtext.outline, OutlineColor = ESP.settings.itemtext.outlineColor })
+			local healthBarOutline = createDrawingObject("Square", { Visible = false, Thickness = ESP.settings.healthbar.outline.thickness, Filled = ESP.settings.healthbar.outline.filled, Color = ESP.settings.healthbar.outline.color })
+			local healthBar = createDrawingObject("Square", { Visible = false, Thickness = ESP.settings.healthbar.thickness, Filled = ESP.settings.healthbar.filled, Transparency = ESP.settings.healthbar.transparency })
+			local healthText = createDrawingObject("Text", { Visible = false, Color = ESP.settings.healthtext.color, Size = ESP.settings.healthtext.size, Center = ESP.settings.healthtext.center, Outline = ESP.settings.healthtext.outline, OutlineColor = ESP.settings.healthtext.outlineColor })
+	
+			esp.update = function()
+				if ESP.settings.enabled then
+					if not humanoidRootPart:IsDescendantOf(game.Workspace) then
+						esp.remove()
+						return
+					end
+	
+					if character.Humanoid.Health <= 0 then
+						esp.remove()
+						return
+					end
+	
+					local boundingPoints = {}
+					local parts = character:GetDescendants()
+					for _, part in ipairs(parts) do
+						if part:IsA("BasePart") and part.Transparency < 1 then
+							local points = getBoundingPoints(part)
+							for _, point in ipairs(points) do
+								table.insert(boundingPoints, point)
 							end
+						end
+					end
+	
+					if #boundingPoints > 0 then
+						local minX, minY = math.huge, math.huge
+						local maxX, maxY = -math.huge, -math.huge
+	
+						for _, point in ipairs(boundingPoints) do
+							minX = math.min(minX, point.X)
+							minY = math.min(minY, point.Y)
+							maxX = math.max(maxX, point.X)
+							maxY = math.max(maxY, point.Y)
+						end
+	
+						local width = maxX - minX
+						local height = maxY - minY
+	
+						box.Size = Vector2.new(math.floor(math.clamp(width, 4, 9999)), math.floor(math.clamp(height, 6, 9999)))
+						box.Position = Vector2.new(minX, minY)
+						box.Visible = ESP.settings.box.enabled or false
+	
+						local toolName = findTool(character)
+						if not ESP.settings.healthtext.enabled and not ESP.settings.healthbar.enabled then
+							itemText.Position = Vector2.new(minX + width / 2, minY + height)
+						elseif not ESP.settings.healthtext.enabled then
+							itemText.Position = Vector2.new(minX + width / 2, minY + height + 10)
+						else
+							itemText.Position = Vector2.new(minX + width / 2, minY + height + 20)
+						end
+						itemText.Text = tostring(toolName)
+						itemText.Visible = ESP.settings.itemtext.enabled
+	
+						if ESP.settings.text.nameEnabled and ESP.settings.text.distanceEnabled then
+							text.Text = character.Name .. " " .. string.format("[%.1f]", (workspace.CurrentCamera.CFrame.Position - humanoidRootPart.Position).Magnitude) or "Player" .. " " .. string.format("[%.1f]", (workspace.CurrentCamera.CFrame.Position - humanoidRootPart.Position).Magnitude)
+						elseif ESP.settings.text.nameEnabled then
+							text.Text = character.Name or "Player"
+						elseif ESP.settings.text.distanceEnabled then
+							text.Text = string.format("[%.1f]", (workspace.CurrentCamera.CFrame.Position - humanoidRootPart.Position).Magnitude)
+						end
+						text.Position = Vector2.new(minX + width / 2, minY - 20)
+						text.Visible = ESP.settings.text.nameEnabled or ESP.settings.text.distanceEnabled or false
+	
+						local humanoid = character:FindFirstChildOfClass("Humanoid")
+						if humanoid then
+							local maxHealth = humanoid.MaxHealth
+							local currentHealth = humanoid.Health
+	
+							local healthBarHeight = height * (currentHealth / maxHealth)
+	
+							healthBarOutline.Size = Vector2.new(7, math.floor(math.clamp(height, 4, 9999)))
+							healthBarOutline.Position = Vector2.new(minX - 10, minY + height - height)
+							healthBarOutline.Visible = ESP.settings.healthbar.outline.enabled and ESP.settings.healthbar.enabled or false
+	
+							healthBar.Size = Vector2.new(7, math.floor(math.clamp(healthBarHeight, 4, 9999)))
+							healthBar.Position = Vector2.new(minX - 10, minY + height - healthBarHeight)
+							healthBar.Visible = ESP.settings.healthbar.enabled or false
+	
+							local gradientColor1 = Color3.new(1, 0, 0)
+							local gradientColor2 = Color3.new(1, 1, 0)
+							local gradientColor3 = Color3.new(0, 1, 0)
+	
+							local healthPercentage = currentHealth / maxHealth
+							local gradientColor
+	
+							if healthPercentage <= 0.5 then
+								gradientColor = gradientColor1:Lerp(gradientColor2, healthPercentage * 2)
+							else
+								gradientColor = gradientColor2:Lerp(gradientColor3, (healthPercentage - 0.5) * 2)
+							end
+	
+							healthBar.Color = gradientColor
+	
+							healthText.Text = tostring(math.floor(currentHealth))
+							healthText.Position = Vector2.new(minX - 20, minY + height - healthBarHeight - healthText.TextBounds.Y / 2)
+							healthText.Visible = ESP.settings.healthtext.enabled or false
+						else
+							healthBarOutline.Visible = false
+							healthBar.Visible = false
+							healthText.Visible = false
+						end
+					else
+						box.Visible = false
+						text.Visible = false
+						itemText.Visible = false
+						healthBarOutline.Visible = false
+						healthBar.Visible = false
+						healthText.Visible = false
+					end
+				else
+					box.Visible = false
+					text.Visible = false
+					itemText.Visible = false
+					healthBarOutline.Visible = false
+					healthBar.Visible = false
+					healthText.Visible = false
+				end
+			end
+	
+			esp.remove = function()
+				box:Remove()
+				text:Remove()
+				itemText:Remove()
+				healthBarOutline:Remove()
+				healthBar:Remove()
+				healthText:Remove()
+			end
+			return esp
+		end
+	
+		local espObjects = {}
+	
+		local function updateESP()
+			for _, player in ipairs(Players:GetPlayers()) do
+				if player ~= LocalPlayer then
+					local character = player.Character
+					if character then
+						if not espObjects[character] then
+							espObjects[character] = CreateESP(character)
+						end
+						local espObject = espObjects[character]
+						if espObject then
+							espObject.update()
 						end
 					end
 				end
 			end
-		else
-			_G.chams = false
-			script.Parent.Text = "oFf"
-			script.Parent.TextColor3 = Color3.fromRGB(0, 0, 0)
 		end
+	
+		local function handleCharacterAdded(character)
+			espObjects[character] = CreateESP(character)
+		end
+	
+		local function handleCharacterRemoving(character)
+			local espObject = espObjects[character]
+			if espObject then
+				espObject.remove()
+				espObjects[character] = nil
+			end
+		end
+	
+		local function handlePlayerAdded(player)
+			player.CharacterAdded:Connect(function(character)
+				handleCharacterAdded(character)
+			end)
+	
+			player.CharacterRemoving:Connect(function(character)
+				handleCharacterRemoving(character)
+			end)
+	
+			handleCharacterAdded(player.Character)
+		end
+	
+		Players.PlayerAdded:Connect(handlePlayerAdded)
+		for _, player in ipairs(Players:GetPlayers()) do
+			handlePlayerAdded(player)
+		end
+	
+		RunService.RenderStepped:Connect(updateESP)
+	
+		return ESP
+	
 	end)
 end
-coroutine.wrap(QELYO_fake_script)()
-local function HUUGDK_fake_script() -- TextButton_2.LocalScript 
+coroutine.wrap(WIOKFN_fake_script)()
+local function LRBNO_fake_script() -- TextButton_2.LocalScript 
 	local script = Instance.new('LocalScript', TextButton_2)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -152,4 +398,27 @@ local function HUUGDK_fake_script() -- TextButton_2.LocalScript
 		end
 	end)
 end
-coroutine.wrap(HUUGDK_fake_script)()
+coroutine.wrap(LRBNO_fake_script)()
+local function QMMVZY_fake_script() -- TextButton_3.LocalScript 
+	local script = Instance.new('LocalScript', TextButton_3)
+
+	local Mcrate = game.ReplicatedStorage.Entities.MetalCrate
+		
+	script.Parent.MouseButton1Click:Connect(function()
+		Mcrate = true
+		function CreateSG(Mcrate)
+			local SurfaceGui = Instance.new("SurfaceGui",parent)
+			SurfaceGui.Parent = parent
+			SurfaceGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+			SurfaceGui.LightInfluence = 0
+			SurfaceGui.ResetOnSpawn = false
+			SurfaceGui.AlwaysOnTop = true
+			local Frame = Instance.new("Frame",SurfaceGui)
+			Frame.BackgroundColor3 = Color3.fromRGB(100, 96, 90)
+			Frame.Size = UDim2.new(1,0,1,0)
+		end
+		
+	end)
+	
+end
+coroutine.wrap(QMMVZY_fake_script)()
