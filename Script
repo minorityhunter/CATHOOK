@@ -1,45 +1,155 @@
 -- Gui to Lua
 -- Version: 3.2
- 
+
 -- Instances:
- 
+
 local ScreenGui = Instance.new("ScreenGui")
-local ImageButton = Instance.new("ImageButton")
 local TextLabel = Instance.new("TextLabel")
- 
+local TextButton = Instance.new("TextButton")
+local TextLabel_2 = Instance.new("TextLabel")
+local TextButton_2 = Instance.new("TextButton")
+local TextLabel_3 = Instance.new("TextLabel")
+local ImageLabel = Instance.new("ImageLabel")
+
 --Properties:
- 
+
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
- 
-ImageButton.Parent = ScreenGui
-ImageButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ImageButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ImageButton.BorderSizePixel = 0
-ImageButton.Position = UDim2.new(0.243090004, 0, 0.0604938269, 0)
-ImageButton.Size = UDim2.new(0, 678, 0, 220)
-ImageButton.Image = "http://www.roblox.com/asset/?id=13979677676"
- 
+
 TextLabel.Parent = ScreenGui
 TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 TextLabel.BorderSizePixel = 0
-TextLabel.Position = UDim2.new(0.243089974, 0, 0.0209876541, 0)
-TextLabel.Size = UDim2.new(0, 677, 0, 50)
-TextLabel.Font = Enum.Font.SourceSans
-TextLabel.Text = "if monday left you broken click the cat"
+TextLabel.Position = UDim2.new(0.259717315, 0, 0.201234564, 0)
+TextLabel.Size = UDim2.new(0, 200, 0, 50)
+TextLabel.ZIndex = 4
+TextLabel.Font = Enum.Font.Unknown
+TextLabel.Text = "10000%  UD eSP"
 TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextScaled = true
 TextLabel.TextSize = 14.000
- 
+TextLabel.TextWrapped = true
+
+TextButton.Parent = TextLabel
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(1.09500003, 0, 0, 0)
+TextButton.Size = UDim2.new(0, 34, 0, 50)
+TextButton.Font = Enum.Font.LuckiestGuy
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextScaled = true
+TextButton.TextSize = 14.000
+TextButton.TextWrapped = true
+
+TextLabel_2.Parent = ScreenGui
+TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_2.BorderSizePixel = 0
+TextLabel_2.Position = UDim2.new(0.259717315, 0, 0.114814818, 0)
+TextLabel_2.Size = UDim2.new(0, 200, 0, 50)
+TextLabel_2.ZIndex = 4
+TextLabel_2.Font = Enum.Font.Unknown
+TextLabel_2.Text = "10000%  nOo CrasHH"
+TextLabel_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_2.TextScaled = true
+TextLabel_2.TextSize = 14.000
+TextLabel_2.TextWrapped = true
+
+TextButton_2.Parent = TextLabel_2
+TextButton_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_2.BorderSizePixel = 0
+TextButton_2.Position = UDim2.new(1.09500003, 0, 0, 0)
+TextButton_2.Size = UDim2.new(0, 34, 0, 50)
+TextButton_2.Font = Enum.Font.Jura
+TextButton_2.Text = "rah"
+TextButton_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_2.TextScaled = true
+TextButton_2.TextSize = 14.000
+TextButton_2.TextWrapped = true
+
+TextLabel_3.Parent = ScreenGui
+TextLabel_3.BackgroundColor3 = Color3.fromRGB(255, 107, 21)
+TextLabel_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_3.BorderSizePixel = 0
+TextLabel_3.Position = UDim2.new(0.243089974, 0, 0.0209876541, 0)
+TextLabel_3.Size = UDim2.new(0, 677, 0, 50)
+TextLabel_3.Font = Enum.Font.Creepster
+TextLabel_3.Text = "if monday left you broken use the script"
+TextLabel_3.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_3.TextScaled = true
+TextLabel_3.TextSize = 14.000
+TextLabel_3.TextWrapped = true
+
+ImageLabel.Parent = ScreenGui
+ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ImageLabel.BorderSizePixel = 0
+ImageLabel.Position = UDim2.new(0.242932856, 0, 0.0827160478, 0)
+ImageLabel.Size = UDim2.new(0, 677, 0, 278)
+ImageLabel.Image = "http://www.roblox.com/asset/?id=13979677676"
+
 -- Scripts:
- 
-local function QMKGLSS_fake_script() -- ImageButton.LocalScript 
-	local script = Instance.new('LocalScript', ImageButton)
- 
+
+local function QELYO_fake_script() -- TextButton.LocalScript 
+	local script = Instance.new('LocalScript', TextButton)
+
+	_G.chams = false
+	local Players = game:GetService("Players")
+	
+	script.Parent.MouseButton1Click:Connect(function()
+		if _G.chams == false then
+			_G.chams = true
+			script.Parent.Text = "oN"
+			script.Parent.TextColor3 = Color3.fromRGB(0, 0, 0)
+			--- cham
+			function CreateSG(name,parent,face)
+				local SurfaceGui = Instance.new("SurfaceGui",parent)
+				SurfaceGui.Parent = parent
+				SurfaceGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+				SurfaceGui.Face = Enum.NormalId[face]
+				SurfaceGui.LightInfluence = 0
+				SurfaceGui.ResetOnSpawn = false
+				SurfaceGui.Name = name
+				SurfaceGui.AlwaysOnTop = true
+				local Frame = Instance.new("Frame",SurfaceGui)
+				Frame.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
+				Frame.Size = UDim2.new(1,0,1,0)
+			end
+			
+			while wait(1) do
+				for i,v in pairs (game:GetService("Players"):GetPlayers()) do
+					if v ~= game:GetService("Players").LocalPlayer and v.Character ~= nil and v.Character:FindFirstChild("Head") and v.Character.Head:FindFirstChild("cham") == nil then
+						for i,v in pairs (v.Character:GetChildren()) do
+							if v:IsA("MeshPart") or v.Name == "Head" then
+								CreateSG("cham",v,"Back")
+								CreateSG("cham",v,"Front")
+								CreateSG("cham",v,"Left")
+								CreateSG("cham",v,"Right")
+								CreateSG("cham",v,"Right")
+								CreateSG("cham",v,"Top")
+								CreateSG("cham",v,"Bottom")
+							end
+						end
+					end
+				end
+			end
+		else
+			_G.chams = false
+			script.Parent.Text = "oFf"
+			script.Parent.TextColor3 = Color3.fromRGB(0, 0, 0)
+		end
+	end)
+end
+coroutine.wrap(QELYO_fake_script)()
+local function HUUGDK_fake_script() -- TextButton_2.LocalScript 
+	local script = Instance.new('LocalScript', TextButton_2)
+
 	script.Parent.MouseButton1Click:Connect(function()
 		while true do
 			print("yayayaya")
 		end
 	end)
 end
-coroutine.wrap(QMKGLSS_fake_script)()
+coroutine.wrap(HUUGDK_fake_script)()
