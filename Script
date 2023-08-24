@@ -1,20 +1,45 @@
+-- Gui to Lua
+-- Version: 3.2
+ 
+-- Instances:
+ 
+local ScreenGui = Instance.new("ScreenGui")
 local ImageButton = Instance.new("ImageButton")
-
-ImageButton.Parent = game.StarterGui.ScreenGui
+local TextLabel = Instance.new("TextLabel")
+ 
+--Properties:
+ 
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ 
+ImageButton.Parent = ScreenGui
 ImageButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ImageButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ImageButton.BorderSizePixel = 0
 ImageButton.Position = UDim2.new(0.243090004, 0, 0.0604938269, 0)
 ImageButton.Size = UDim2.new(0, 678, 0, 220)
 ImageButton.Image = "http://www.roblox.com/asset/?id=13979677676"
-
-local function HSHTEJG_fake_script() -- ImageButton.LocalScript 
+ 
+TextLabel.Parent = ScreenGui
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.243089974, 0, 0.0209876541, 0)
+TextLabel.Size = UDim2.new(0, 677, 0, 50)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "if monday left you broken click the cat"
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextSize = 14.000
+ 
+-- Scripts:
+ 
+local function QMKGLSS_fake_script() -- ImageButton.LocalScript 
 	local script = Instance.new('LocalScript', ImageButton)
-
+ 
 	script.Parent.MouseButton1Click:Connect(function()
 		while true do
-	
+			print("yayayaya")
 		end
 	end)
 end
-coroutine.wrap(HSHTEJG_fake_script)()
+coroutine.wrap(QMKGLSS_fake_script)()
